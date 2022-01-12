@@ -158,14 +158,14 @@ export default class App extends Component {
 			modalVisible: !this.state.modalVisible
 		})
 
-		const responce = await (await fetch(`http://localhost:3000/data/${id}`)).json()
+		const responce = await (await fetch(`http://localhost:3002/data/${id}`)).json()
 
 		if(responce) {
 			console.log("save post")
 		}else {
 			console.log("just get post..")
 		}
-		
+
 		this.getdata.getPostById(id)
 		.then(singleData => {
 			this.savePost(singleData.data)
@@ -176,7 +176,7 @@ export default class App extends Component {
 
 	savePost = async data => {	
 		console.log(data)
-		fetch("http://localhost:3000/data", {
+		fetch("http://localhost:3002/data", {
 			method: "POST",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify(data)
