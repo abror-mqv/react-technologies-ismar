@@ -140,6 +140,7 @@ export default class App extends Component {
 	getdata = new FetchData();
 
 	modalData = (data) => {
+		
 		this.setState({
 			modal: data.data
 		})
@@ -159,19 +160,22 @@ export default class App extends Component {
 		})
 
 		const responce = await (await fetch(`http://localhost:3002/data/${id}`)).json()
+		console.log(responce)
 
-		if(responce) {
-			console.log("save post")
+		if(!responce.id) {
+			this.getdata.getPostById(id)
+			.then(singleData => {
+				console.log(singleData)
+				this.savePost(singleData.data)
+				this.modalData(singleData)
+			})
+			.catch(this.onError)
 		}else {
-			console.log("just get post..")
-		}
-
-		this.getdata.getPostById(id)
-		.then(singleData => {
-			this.savePost(singleData.data)
-			this.modalData(singleData)
-		})
-		.catch(this.onError);
+			const responce = await (await fetch(`http://localhost:3002/data/${id}`, {
+			})).json()
+			console.log(responce)
+			this.modalData({data: responce})
+		}		
 	}
 
 	savePost = async data => {	
@@ -199,7 +203,6 @@ export default class App extends Component {
 			})
 		})
 		.catch(this.onError);
-
 	}
 	
 	
