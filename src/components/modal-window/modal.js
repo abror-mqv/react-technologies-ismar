@@ -32,6 +32,20 @@ export default class ModalWindow extends Component {
 }
 
 const Content = ({first_name, last_name, onCloseWindow, avatar, email}) => {
+	
+	React.useEffect(() => {
+
+        const params = window.location.pathname
+        let id = params.substring(1);
+        if(id === ""){
+			onCloseWindow()
+        }else{}   
+    }, [window.location.pathname])
+
+	const redirectHome = () => {
+		window.location.pathname = ''
+	}
+
 	return(
 		<>
 			<div className="modal-header">
@@ -46,7 +60,7 @@ const Content = ({first_name, last_name, onCloseWindow, avatar, email}) => {
 					</div>
 				</div>
 				<div className="modal-footer">
-					<button onClick={onCloseWindow}>Закрыть</button>
+					<button onClick={onCloseWindow, redirectHome}>Закрыть</button>
 			</div>
 		</>
 	)

@@ -7,6 +7,20 @@ import './post-list.css';
 
 
 const PostList = ({posts, onDelete, onOpenWindow, onToggleImportant, onToggleLike}) => {
+    React.useEffect(() => {
+
+        const params = window.location.pathname
+        let id = params.substring(1);
+        if(id === ""){
+
+        }else{
+            onOpenWindow(id)
+        }   
+    }, [window.location.pathname])
+
+    const redirectModal = (id) => {
+        // window.location.pathname = `/${id}`
+    }
 
     const elem = posts.map((item) => {
 
@@ -19,7 +33,7 @@ const PostList = ({posts, onDelete, onOpenWindow, onToggleImportant, onToggleLik
                     onDelete={()=>onDelete(id)}
                     onToggleImportant={()=>onToggleImportant(id)}
                     onToggleLike={()=>onToggleLike(id)}
-                    onOpenWindow={()=>onOpenWindow(id)}
+                    onOpenWindow={()=> {onOpenWindow(id); window.location.pathname = `/${id}`}}
                     /> 
             </li>
         );
