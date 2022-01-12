@@ -14,7 +14,6 @@ import "./app.css";
 export default class App extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             data: [],
             searchValue: "",
@@ -152,23 +151,37 @@ export default class App extends Component {
         });
     };
 
-    onOpenWindow = (id) => {
+    onOpenWindow = async (id) => {
         this.setState({
             modalVisible: !this.state.modalVisible,
         });
 
-        this.getdata
-            .getPostById(id)
-            .then((singleData) => {
-                this.savePost(singleData.data);
-                this.modalData(singleData);
-            })
-            .catch(this.onError);
+        const responce = await (
+            await fetch(`http://localhost:3002/data/${id}`)
+        ).json();
+        console.log(responce);
+
+        if (!responce.id) {
+            this.getdata
+                .getPostById(id)
+                .then((singleData) => {
+                    console.log(singleData);
+                    this.savePost(singleData.data);
+                    this.modalData(singleData);
+                })
+                .catch(this.onError);
+        } else {
+            const responce = await (
+                await fetch(`http://localhost:3002/data/${id}`, {})
+            ).json();
+            console.log(responce);
+            this.modalData({ data: responce });
+        }
     };
 
     savePost = async (data) => {
         console.log(data);
-        fetch("http://localhost:3000/data", {
+        fetch("http://localhost:3002/data", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
@@ -176,7 +189,6 @@ export default class App extends Component {
     };
 
     onCloseWindow = () => {
-        window.location.pathname = "/";
         this.setState({
             modalVisible: !this.state.modalVisible,
             modal: [],
