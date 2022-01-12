@@ -8,7 +8,6 @@ import './post-list.css';
 
 const PostList = ({posts, onDelete, onOpenWindow, onToggleImportant, onToggleLike}) => {
     React.useEffect(() => {
-
         const params = window.location.pathname
         let id = params.substring(1);
         if(id === ""){
@@ -16,15 +15,16 @@ const PostList = ({posts, onDelete, onOpenWindow, onToggleImportant, onToggleLik
         }else{
             onOpenWindow(id)
         }   
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [window.location.pathname])
 
-    const redirectModal = (id) => {
-        // window.location.pathname = `/${id}`
-    }
-
-    const elem = posts.map((item) => {
+    const elem = posts.map((item) => {   
 
         const {id, ...itemProps} = item;
+
+        const redirectModal = (id) => {
+            window.location.pathname = `/${id}`
+        }
 
         return (
             <li key={id}>
@@ -33,7 +33,7 @@ const PostList = ({posts, onDelete, onOpenWindow, onToggleImportant, onToggleLik
                     onDelete={()=>onDelete(id)}
                     onToggleImportant={()=>onToggleImportant(id)}
                     onToggleLike={()=>onToggleLike(id)}
-                    onOpenWindow={()=> {onOpenWindow(id); window.location.pathname = `/${id}`}}
+                    onOpenWindow={()=> {onOpenWindow(id); redirectModal(id)}}
                     /> 
             </li>
         );

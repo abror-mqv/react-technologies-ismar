@@ -11,6 +11,7 @@ import Loading from "../loading";
 import ErrorMsg from "../errorMsg";
 import "./app.css";
 
+
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -159,7 +160,7 @@ export default class App extends Component {
         const responce = await (
             await fetch(`http://localhost:3002/data/${id}`)
         ).json();
-        console.log(responce);
+
 
         if (!responce.id) {
             this.getdata
@@ -174,7 +175,6 @@ export default class App extends Component {
             const responce = await (
                 await fetch(`http://localhost:3002/data/${id}`, {})
             ).json();
-            console.log(responce);
             this.modalData({ data: responce });
         }
     };
@@ -189,10 +189,11 @@ export default class App extends Component {
     };
 
     onCloseWindow = () => {
+        window.location.pathname = "/"
         this.setState({
             modalVisible: !this.state.modalVisible,
             modal: [],
-        });
+        });        
     };
 
     getAllData() {
