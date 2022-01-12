@@ -152,19 +152,26 @@ export default class App extends Component {
 		})
 	}
 
-	onOpenWindow = (id) => {
+	onOpenWindow = async (id) => {
 
 		this.setState({
 			modalVisible: !this.state.modalVisible
 		})
 
+		const responce = await (await fetch(`http://localhost:3000/data/${id}`)).json()
+
+		if(responce) {
+			console.log("save post")
+		}else {
+			console.log("just get post..")
+		}
+		
 		this.getdata.getPostById(id)
 		.then(singleData => {
 			this.savePost(singleData.data)
 			this.modalData(singleData)
 		})
 		.catch(this.onError);
-
 	}
 
 	savePost = async data => {	
