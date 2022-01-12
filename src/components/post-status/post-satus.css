@@ -1,0 +1,14 @@
+.btn-group button {
+    background: transparent;
+    border: 1px solid;
+    margin-left: 5px;
+    border-radius: .25rem;
+    font-size: 14px;
+    padding: 0 10px;
+}
+
+button.btn-all {
+    background: #3d9caf;
+    color: white;
+    border-color: #115e6d;
+}
