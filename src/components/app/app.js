@@ -14,6 +14,7 @@ import "./app.css";
 export default class App extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             data: [],
             searchValue: "",
@@ -163,7 +164,7 @@ export default class App extends Component {
                 this.modalData(singleData);
             })
             .catch(this.onError);
-   };
+    };
 
     savePost = async (data) => {
         console.log(data);
@@ -175,7 +176,7 @@ export default class App extends Component {
     };
 
     onCloseWindow = () => {
-        window.location.pathname = "/"
+        window.location.pathname = "/";
         this.setState({
             modalVisible: !this.state.modalVisible,
             modal: [],
